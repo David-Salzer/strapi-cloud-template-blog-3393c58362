@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_shared_institutes",
+  "info": {
+    "displayName": "Institute",
+    "icon": "cube",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Approved_Institute": {
+      "type": "boolean",
+      "private": true
+    },
+    "Institute_ID_Number": {
+      "type": "biginteger"
+    },
+    "Email": {
+      "type": "email"
+    },
+    "Contact_Name": {
+      "type": "string"
+    },
+    "Institute_Confirmation_Document": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "images"
+      ]
+    }
+  }
+}

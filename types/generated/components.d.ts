@@ -1,5 +1,22 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
+export interface SharedInstitute extends Schema.Component {
+  collectionName: 'components_shared_institutes';
+  info: {
+    displayName: 'Institute';
+    icon: 'cube';
+    description: '';
+  };
+  attributes: {
+    Name: Attribute.String;
+    Approved_Institute: Attribute.Boolean & Attribute.Private;
+    Institute_ID_Number: Attribute.BigInteger;
+    Email: Attribute.Email;
+    Contact_Name: Attribute.String;
+    Institute_Confirmation_Document: Attribute.Media;
+  };
+}
+
 export interface SharedMedia extends Schema.Component {
   collectionName: 'components_shared_media';
   info: {
@@ -65,6 +82,7 @@ export interface SharedSlider extends Schema.Component {
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
+      'shared.institute': SharedInstitute;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
