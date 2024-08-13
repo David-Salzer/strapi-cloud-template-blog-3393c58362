@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>טופס בקשת מוסד</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>טופס בקשת מוסד</h1>
+    <form id="institutionForm">
+        <div>
+            <label for="name">שם המוסד:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div>
+            <label for="instituteIdNumber">מספר מזהה של המוסד:</label>
+            <input type="number" id="instituteIdNumber" name="instituteIdNumber" required>
+        </div>
+
+        <div>
+            <label for="email">אימייל:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div>
+            <label for="contactName">שם איש הקשר:</label>
+            <input type="text" id="contactName" name="contactName" required>
+        </div>
+
+        <div>
+            <label for="instituteConfirmationDocument">מסמך אימות של המוסד:</label>
+            <input type="file" id="instituteConfirmationDocument" name="instituteConfirmationDocument" required>
+        </div>
+
+        <button type="submit">שלח</button>
+    </form>
+
+    <script>
+        document.getElementById('institutionForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData();
+            formData.append('data', JSON.stringify({
+                Institute: {
+                    name: document.getElementById('name').value,
+                    instituteIdNumber: document.getElementById('instituteIdNumber').value,
+                    email: document.getElementById('email').value,
+                    contactName: document.getElementById('contactName').value,
+                    approvedInstitute: false
+                }
+            }));
+            formData.append('files.instituteConfirmationDocument', document.getElementById('instituteConfirmationDocument').files[0]);
+
+            try {
+                const response = await fetch('http://localhost:1337/api/institute-requests', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    alert('בקשת המוסד נוצרה בהצלחה!');
+                } else {
+                    alert('הייתה שגיאה ביצירת בקשת המוסד. נא לנסות שוב.');
+                }
+            } catch (error) {
+                console.error('הייתה שגיאה ביצירת בקשת המוסד:', error);
+                alert('הייתה שגיאה ביצירת בקשת המוסד. נא לנסות שוב.');
+            }
+        });
+    </script>
+</body>
+</html>

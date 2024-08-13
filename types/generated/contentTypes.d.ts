@@ -978,6 +978,43 @@ export interface ApiGlobalGlobal extends Schema.SingleType {
   };
 }
 
+export interface ApiInstituteRequestInstituteRequest
+  extends Schema.CollectionType {
+  collectionName: 'institute_requests';
+  info: {
+    singularName: 'institute-request';
+    pluralName: 'institute-requests';
+    displayName: 'Institute_Request';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Institute: Attribute.Component<'shared.institute'>;
+    Request_ID: Attribute.UID &
+      Attribute.Private &
+      Attribute.SetMinMaxLength<{
+        minLength: 5;
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::institute-request.institute-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::institute-request.institute-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1001,6 +1038,7 @@ declare module '@strapi/types' {
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
       'api::global.global': ApiGlobalGlobal;
+      'api::institute-request.institute-request': ApiInstituteRequestInstituteRequest;
     }
   }
 }
